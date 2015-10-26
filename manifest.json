@@ -1,0 +1,21 @@
+{
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "manifest_version": 2,
+  "name": "Pull Tool",
+  "version": "0.0.0",
+
+  "description": "An app for pulling packages from a remote location.",
+  "icons": { "16": "pulltool-icon-16px.png",
+             "48": "pulltool-icon-48px.png",
+            "128": "pulltool-icon-128px.png" },
+
+  "author": "Stuart P. Bentley",
+  "optional_permissions": [
+    "management", "notifications", "http://*/", "https://*/"],
+  "permissions": [ "storage",
+    {"fileSystem": ["write", "retainEntries", "directory"]}]
+}
