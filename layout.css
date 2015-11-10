@@ -29,3 +29,8 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+textarea {
+  width: 100%;
+  flex: 1;
+}
