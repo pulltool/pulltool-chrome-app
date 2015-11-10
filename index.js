@@ -45,11 +45,11 @@ function createListingEntry(listing) {
     });
 
   var configTextArea = listingEntry.getPart('config-textarea');
-  configTextArea.textContent = listing.config || '';
+  configTextArea.value = listing.config || '';
 
   listingEntry.getPart('config-save')
     .addEventListener('click', function(evt) {
-      var configJson = configTextArea.textContent;
+      var configJson = configTextArea.value;
       updateConfig(configJson);
       // TODO: Acknowledge config update saved
     });
