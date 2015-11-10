@@ -2,9 +2,9 @@
   "app": {
     "background": {
       "scripts": [
+        "vendor/es6-shim.js",
         "vendor/jszip.js",
         "vendor/jszip-utils.js",
-        "vendor/Array.prototype.find.js",
         "lib/listings.js",
         "lib/dirEntries.js",
         "lib/clobber.js",
