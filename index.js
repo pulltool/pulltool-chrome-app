@@ -45,6 +45,7 @@ function createListingEntry(listing) {
     });
 
   var configTextArea = listingEntry.getPart('config-textarea');
+  configTextArea.textContent = listing.config || '';
 
   listingEntry.getPart('config-save')
     .addEventListener('click', function(evt) {
@@ -81,4 +82,24 @@ function createListingEntry(listing) {
   }
 
   pullButton.addEventListener('click', performPull);
+
+  return listingEntry;
 }
+
+var lastListingItem = document.getElementById('pseudo-listing');
+
+document.getElementById('new-listing').addEventListener('click', function() {
+  var newListing = createListingObject();
+  listings.addNew(newListing);
+    listingsDiv.insertBefore(
+      createListingEntry(newListing), lastListingItem);
+});
+
+var listingsDiv = document.getElementById('pull-listings');
+
+listings.getAll().then(function(listingList){
+  for (var i = 0; i < listingList.length; i++) {
+    listingsDiv.insertBefore(
+      createListingEntry(listingList[i]), lastListingItem);
+  }
+});
