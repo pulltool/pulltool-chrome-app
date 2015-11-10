@@ -23,14 +23,6 @@ function createListingEntry(listing) {
   var listingEntry = cre(teListingEntry);
 
   function updateConfig(configJson) {
-    try {
-      var config = JSON.parse(configJson);
-      if (config.source && config.source.zip) {
-        chrome.permissions.request({origins:[config.source.zip]});
-      }
-    } catch (err) {
-      // TODO: warn that JSON is invalid
-    }
     return listings.updateById(listing.id, 'config', configJson);
   }
 

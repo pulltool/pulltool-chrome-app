@@ -21,8 +21,7 @@
             "128": "images/pulltool-icon-128px.png" },
 
   "author": "Stuart P. Bentley",
-  "optional_permissions": [
-    "notifications", "http://*/", "https://*/"],
-  "permissions": [ "storage",
+  "optional_permissions": ["notifications"],
+  "permissions": [ "storage", "http://*/", "https://*/",
     {"fileSystem": ["write", "retainEntries", "directory"]}]
 }
