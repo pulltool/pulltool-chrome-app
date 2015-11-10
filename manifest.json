@@ -21,7 +21,7 @@
 
   "author": "Stuart P. Bentley",
   "optional_permissions": [
-    "management", "notifications", "http://*/", "https://*/"],
+    "notifications", "http://*/", "https://*/"],
   "permissions": [ "storage",
     {"fileSystem": ["write", "retainEntries", "directory"]}]
 }
