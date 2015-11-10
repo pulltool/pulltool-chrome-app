@@ -1,3 +1,7 @@
 .listing {
   border-bottom: 1px solid #eee;
 }
+
+textarea {
+  font-family: monospace, monospace;
+}
