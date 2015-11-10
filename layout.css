@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+}
+
+.listings {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
+
+.listing {
+  flex: none;
+  height: 180px;
+  display: flex;
+  flex-flow: row;
+}
+
+.section {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}

@@ -1,7 +1,13 @@
 {
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": [
+        "vendor/jszip.js",
+        "vendor/jszip-utils.js",
+        "vendor/Array.prototype.find.js",
+        "lib/listings.js",
+        "lib/dirEntries.js",
+        "background.js"]
     }
   },
   "manifest_version": 2,
