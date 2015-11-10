@@ -59,7 +59,7 @@ function createListingEntry(listing) {
 
   function performPull() {
     var port = chrome.runtime.connect();
-    port.sendMessage({type: 'startPull', listingId: listing.id});
+    port.postMessage({type: 'startPull', listingId: listing.id});
     pullButton.disabled = true;
 
     function updateStatus(message) {
