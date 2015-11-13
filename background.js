@@ -1,4 +1,4 @@
-/* global chrome listings dirEntries clobber JSZip JSZipUtils */
+/* global chrome listings dirEntries clobber ExtractionMap JSZipUtils */
 
 // Tell Chrome to open the app when the app launches
 chrome.app.runtime.onLaunched.addListener(function() {
@@ -19,13 +19,18 @@ function connectionListener(port) {
     return port.disconnect();
   }
 
-  function pullZip(sourceUrl, dirEntry) {
+  function pullArchive(source, dirEntry) {
     port.postMessage({type: 'status', message: 'Downloading ZIP file'});
-    JSZipUtils.getBinaryContent(sourceUrl, function(err, data) {
+
+    // TODO: use something like fetch instead of this function
+    JSZipUtils.getBinaryContent(source.url, function(err, data) {
       if (err) return die(err);
 
+      var exMap = new ExtractionMap();
+      exMap.addArchive(source, data);
+
       port.postMessage({type: 'status', message: 'Extracting ZIP file'});
-      return clobber.dirFromZip(dirEntry, zip)
+      return clobber.extractToDir(exMap, dirEntry)
         .then(function () {
           port.postMessage({type: 'finish'});
           return port.disconnect();
@@ -39,12 +44,14 @@ function connectionListener(port) {
     messageHandlers = null;
     listings.setLastUsed(listing).then(function(){
       var config = JSON.parse(listing.config);
-      if (config.source && config.source.zip) {
-        // TODO: ensure permission for origin has been requested
+      // TODO: handle multiple sources
+      if (config.sources) {
         return dirEntries.restoreEntry(listing.retainedDirId)
           .then(function (dirEntry) {
             // TODO: enter state where pull can be aborted
-            return pullZip(config.source.zip, dirEntry);
+            // TODO: create extraction map here
+            // TODO: pull all sources
+            return pullArchive(config.sources[0], dirEntry);
           }).catch(die);
       } else return die(new Error('No recognized source to pull from'));
     });
