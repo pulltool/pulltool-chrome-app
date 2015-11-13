@@ -8,6 +8,7 @@
         "lib/listings.js",
         "lib/dirEntries.js",
         "lib/clobber.js",
+        "lib/extractionMap.js",
         "background.js"]
     }
   },
