@@ -24,8 +24,6 @@ function connectionListener(port) {
     JSZipUtils.getBinaryContent(sourceUrl, function(err, data) {
       if (err) return die(err);
 
-      port.postMessage({type: 'status', message: 'Reading ZIP file'});
-      var zip = new JSZip(data);
       port.postMessage({type: 'status', message: 'Extracting ZIP file'});
       return clobber.dirFromZip(dirEntry, zip)
         .then(function () {
