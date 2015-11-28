@@ -23,7 +23,7 @@ function connectionListener(port) {
   var finishedSources = 0;
 
   function progressMessage() {
-    if (finishedSources > totalSources) {
+    if (finishedSources < totalSources) {
       if (totalSources > 1) {
         return 'Downloading archives ('
           + finishedSources + '/' + totalSources + ')';
