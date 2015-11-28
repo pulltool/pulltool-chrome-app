@@ -31,7 +31,7 @@ function connectionListener(port) {
         return 'Downloading archive';
       }
     } else {
-      return 'Processing ' + totalSources > 1 ? 'archives' : 'archive';
+      return 'Processing ' + (totalSources > 1 ? 'archives' : 'archive');
     }
   }
 
