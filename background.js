@@ -43,9 +43,10 @@ function connectionListener(port) {
     return new Promise(function(resolve, reject){
       // TODO: use something like fetch instead of this function
       return JSZipUtils.getBinaryContent(source.url, function(err, data) {
+        if (err) return reject(err);
         ++finishedSources;
         postDownloadProgress();
-        return err ? reject(err) : resolve(data);
+        return resolve(data);
       });
     });
   }
