@@ -19,22 +19,34 @@ function connectionListener(port) {
     return port.disconnect();
   }
 
-  function pullArchive(source, dirEntry) {
-    port.postMessage({type: 'status', message: 'Downloading ZIP file'});
+  var totalSources = 0;
+  var finishedSources = 0;
 
-    // TODO: use something like fetch instead of this function
-    JSZipUtils.getBinaryContent(source.url, function(err, data) {
-      if (err) return die(err);
+  function progressMessage() {
+    if (finishedSources > totalSources) {
+      if (totalSources > 1) {
+        return 'Downloading archives ('
+          + finishedSources + '/' + totalSources + ')';
+      } else {
+        return 'Downloading archive';
+      }
+    } else {
+      return 'Processing ' + totalSources > 1 ? 'archives' : 'archive';
+    }
+  }
 
-      var exMap = new ExtractionMap();
-      exMap.addArchive(source, data);
+  function postDownloadProgress() {
+    port.postMessage({type: 'status', message: progressMessage()});
+  }
 
-      port.postMessage({type: 'status', message: 'Extracting ZIP file'});
-      return clobber.extractToDir(exMap, dirEntry)
-        .then(function () {
-          port.postMessage({type: 'finish'});
-          return port.disconnect();
-        }).catch(die);
+  function pullArchive(source) {
+    return new Promise(function(resolve, reject){
+      // TODO: use something like fetch instead of this function
+      return JSZipUtils.getBinaryContent(source.url, function(err, data) {
+        ++finishedSources;
+        postDownloadProgress();
+        return err ? reject(err) : resolve(data);
+      });
     });
   }
 
@@ -44,16 +56,37 @@ function connectionListener(port) {
     messageHandlers = null;
     listings.setLastUsed(listing).then(function(){
       var config = JSON.parse(listing.config);
-      // TODO: handle multiple sources
+
       if (config.sources) {
-        return dirEntries.restoreEntry(listing.retainedDirId)
-          .then(function (dirEntry) {
-            // TODO: enter state where pull can be aborted
-            // TODO: create extraction map here
-            // TODO: pull all sources
-            return pullArchive(config.sources[0], dirEntry);
-          }).catch(die);
-      } else return die(new Error('No recognized source to pull from'));
+        totalSources = config.sources.length;
+      }
+
+      if (totalSources == 0) {
+        return die(new Error('No recognized source to pull from'));
+      }
+
+      var exMap = new ExtractionMap();
+
+      postDownloadProgress();
+      // TODO: enter state where pull can be aborted
+      return Promise.all(config.sources.map(pullArchive))
+        .then(function(archives){
+
+          for (var i = 0; i < archives.length; i++) {
+            exMap.addArchive(config.sources[i], archives[i]);
+          }
+
+          return dirEntries.restoreEntry(listing.retainedDirId);
+        }).then(function (dirEntry) {
+
+          port.postMessage({type: 'status', message: 'Extracting archive'});
+          return clobber.extractToDir(exMap, dirEntry)
+            .then(function () {
+              port.postMessage({type: 'finish'});
+              return port.disconnect();
+            });
+
+        }).catch(die);
     });
   }
 
