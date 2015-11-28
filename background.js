@@ -123,11 +123,10 @@ function connectionListener(port) {
       if (handler) {
         return handler(message);
 
-      // TODO: replace with rejections + warnings without dying (just ignoring)
-      // since that's better for extensibility
-      } else return die(new Error(
-        'Message type "' + message.type + '" unrecognized or invalid'));
-    } else return die(new Error('Current state may not be messaged'));
+      } else return port.postMessage({type: 'reject', message:
+        'Message type "' + message.type + '" unrecognized or invalid'});
+    } else return  port.postMessage({type: 'reject', message:
+      'Current state may not be messaged'});
   }
 
   port.onMessage.addListener(receiveMessage);
