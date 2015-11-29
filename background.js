@@ -1,5 +1,5 @@
 /* global chrome listings dirEntries clobber patching ExtractionMap
-  JSZipUtils */
+  jsyaml JSZipUtils */
 
 // Tell Chrome to open the app when the app launches
 chrome.app.runtime.onLaunched.addListener(function() {
@@ -57,7 +57,7 @@ function connectionListener(port) {
   function pull(listing) {
     messageHandlers = null;
     listings.setLastUsed(listing).then(function(){
-      var config = JSON.parse(listing.config);
+      var config = jsyaml.safeLoad(listing.config);
 
       if (config.sources) {
         totalSources = config.sources.length;
