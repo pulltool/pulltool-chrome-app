@@ -83,7 +83,7 @@ function connectionListener(port) {
 
           port.postMessage({type: 'status', message: 'Extracting archive'});
           return clobber.extractPatchedToDir(exMap,
-            patching.pathFilePatcher(), dirEntry)
+            patching.pathFilePatcher(config.patch), dirEntry)
             .then(function () {
               port.postMessage({type: 'finish'});
               return port.disconnect();
