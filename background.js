@@ -1,4 +1,5 @@
-/* global chrome listings dirEntries clobber ExtractionMap JSZipUtils */
+/* global chrome listings dirEntries clobber patching ExtractionMap
+  JSZipUtils */
 
 // Tell Chrome to open the app when the app launches
 chrome.app.runtime.onLaunched.addListener(function() {
@@ -81,7 +82,8 @@ function connectionListener(port) {
         }).then(function (dirEntry) {
 
           port.postMessage({type: 'status', message: 'Extracting archive'});
-          return clobber.extractToDir(exMap, dirEntry)
+          return clobber.extractPatchedToDir(exMap,
+            patching.pathFilePatcher(), dirEntry)
             .then(function () {
               port.postMessage({type: 'finish'});
               return port.disconnect();

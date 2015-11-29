@@ -3,10 +3,12 @@
     "background": {
       "scripts": [
         "vendor/es6-shim.js",
+        "vendor/canvas-toBlob.js",
         "vendor/jszip.js",
         "vendor/jszip-utils.js",
         "lib/listings.js",
         "lib/dirEntries.js",
+        "lib/patching.js",
         "lib/clobber.js",
         "lib/extractionMap.js",
         "background.js"]
