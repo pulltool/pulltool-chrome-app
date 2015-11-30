@@ -33,8 +33,8 @@ function createListingEntry(listing) {
       });
     });
 
-  var configEditor = listingEntry.getPart('config-editor');
-  var editor = ace.edit(configEditor);
+  var editorElement = listingEntry.getPart('config-editor');
+  var editor = ace.edit(editorElement);
   editor.setTheme("ace/theme/chrome");
   editor.getSession().setMode("ace/mode/yaml");
   editor.renderer.setOption('showLineNumbers', false);
@@ -42,7 +42,7 @@ function createListingEntry(listing) {
 
   listingEntry.getPart('config-save')
     .addEventListener('click', function(evt) {
-      var configJson = configEditor.getValue();
+      var configJson = editor.getValue();
       updateConfig(configJson);
       // TODO: Acknowledge config update saved
     });
