@@ -26,7 +26,7 @@ body {
   flex: 1;
   display: flex;
   flex-flow: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
