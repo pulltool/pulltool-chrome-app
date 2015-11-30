@@ -1,14 +1,12 @@
 /* global ace cre chrome uuid listings dirEntries */
 
 var teListingEntry = cre('.listing', {wall: true}, [
-  cre('.section', {part: 'dir-section'}, [
-    cre('button', {part: 'dir-chooser', type: 'button'}, 'Choose directory')
-  ]),
   cre('.section', {part: 'config-section'}, [
     cre('div', {part: 'config-editor'}),
-    cre('button', {part: 'config-save', type: 'button'}, 'Save config')
   ]),
   cre('.section', {part: 'op-section'}, [
+    cre('button', {part: 'dir-chooser', type: 'button'}, 'Choose directory'),
+    cre('button', {part: 'config-save', type: 'button'}, 'Save config'),
     cre('button', {part: 'pull-button'}, 'Pull'),
     cre('output', {part: 'pull-status'})
   ])

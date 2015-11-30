@@ -1,6 +1,6 @@
 /* global partywallStyler */
 var styler = partywallStyler();
 
-styler.addStyle([['.edit-pull','.dir-chooser']],
-  'padding: 6px;');
+styler.addStyle([['.listing','#config-section']],
+  'flex: 3;');
 
