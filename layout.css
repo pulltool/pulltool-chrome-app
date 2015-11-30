@@ -30,7 +30,7 @@ body {
   align-items: center;
 }
 
-textarea {
+textarea, .ace_editor {
   width: 100%;
   flex: 1;
 }
