@@ -39,6 +39,7 @@ function createListingEntry(listing) {
   var editor = ace.edit(configEditor);
   editor.setTheme("ace/theme/chrome");
   editor.getSession().setMode("ace/mode/yaml");
+  editor.renderer.setOption('showLineNumbers', false);
   editor.setValue(listing.config || '');
 
   listingEntry.getPart('config-save')
