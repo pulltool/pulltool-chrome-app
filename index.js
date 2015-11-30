@@ -8,7 +8,6 @@ var teListingEntry = cre('.listing', {wall: true}, [
     cre('textarea', {part: 'config-textarea'}),
     cre('button', {part: 'config-save', type: 'button'}, 'Save config')
   ]),
-  cre('.section', {part: 'context-section'}, []),
   cre('.section', {part: 'op-section'}, [
     cre('button', {part: 'pull-button'}, 'Pull'),
     cre('output', {part: 'pull-status'})
