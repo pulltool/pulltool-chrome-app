@@ -1,11 +1,11 @@
-/* global cre chrome uuid listings dirEntries */
+/* global ace cre chrome uuid listings dirEntries */
 
 var teListingEntry = cre('.listing', {wall: true}, [
   cre('.section', {part: 'dir-section'}, [
     cre('button', {part: 'dir-chooser', type: 'button'}, 'Choose directory')
   ]),
   cre('.section', {part: 'config-section'}, [
-    cre('textarea', {part: 'config-textarea'}),
+    cre('div', {part: 'config-editor'}),
     cre('button', {part: 'config-save', type: 'button'}, 'Save config')
   ]),
   cre('.section', {part: 'op-section'}, [
@@ -35,12 +35,15 @@ function createListingEntry(listing) {
       });
     });
 
-  var configTextArea = listingEntry.getPart('config-textarea');
-  configTextArea.value = listing.config || '';
+  var configEditor = listingEntry.getPart('config-editor');
+  var editor = ace.edit(configEditor);
+  editor.setTheme("ace/theme/chrome");
+  editor.getSession().setMode("ace/mode/yaml");
+  editor.setValue(listing.config || '');
 
   listingEntry.getPart('config-save')
     .addEventListener('click', function(evt) {
-      var configJson = configTextArea.value;
+      var configJson = configEditor.getValue();
       updateConfig(configJson);
       // TODO: Acknowledge config update saved
     });
