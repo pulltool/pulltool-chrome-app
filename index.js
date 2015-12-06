@@ -35,8 +35,11 @@ function createListingEntry(listing) {
 
   var editorElement = listingEntry.getPart('config-editor');
   var editor = ace.edit(editorElement);
+  var session = editor.getSession();
   editor.setTheme("ace/theme/chrome");
-  editor.getSession().setMode("ace/mode/yaml");
+  session.setMode("ace/mode/yaml");
+  session.setTabSize(2);
+  session.setUseSoftTabs(true);
   editor.renderer.setOption('showLineNumbers', false);
   editor.setValue(listing.config || '');
 
