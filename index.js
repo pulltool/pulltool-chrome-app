@@ -40,12 +40,20 @@ function createListingEntry(listing) {
   editor.renderer.setOption('showLineNumbers', false);
   editor.setValue(listing.config || '');
 
+  function saveConfig() {
+    var configJson = editor.getValue();
+    updateConfig(configJson);
+    // TODO: Acknowledge config update saved
+  }
+
   listingEntry.getPart('config-save')
-    .addEventListener('click', function(evt) {
-      var configJson = editor.getValue();
-      updateConfig(configJson);
-      // TODO: Acknowledge config update saved
-    });
+    .addEventListener('click', saveConfig);
+
+  editor.commands.addCommand({
+    name: "save",
+    bindKey: {win: "Ctrl-S", mac: "Command-S"},
+    exec: saveConfig
+  });
 
   var statusOutput = listingEntry.getPart('pull-status');
   var pullButton = listingEntry.getPart('pull-button');
