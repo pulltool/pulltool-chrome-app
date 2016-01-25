@@ -1,5 +1,5 @@
 /* global chrome listings dirEntries clobber patching ExtractionMap
-  jsyaml JSZipUtils */
+  jsyaml fetch */
 
 // Tell Chrome to open the app when the app launches
 chrome.app.runtime.onLaunched.addListener(function() {
@@ -41,14 +41,12 @@ function connectionListener(port) {
   }
 
   function pullArchive(source) {
-    return new Promise(function(resolve, reject){
-      // TODO: use something like fetch instead of this function
-      return JSZipUtils.getBinaryContent(source.url, function(err, data) {
-        if (err) return reject(err);
-        ++finishedSources;
-        postDownloadProgress();
-        return resolve(data);
-      });
+    return fetch(source.url).then(function(response){
+      return response.arrayBuffer();
+    }).then(function(data) {
+      ++finishedSources;
+      postDownloadProgress();
+      return data;
     });
   }
 

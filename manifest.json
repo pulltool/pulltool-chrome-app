@@ -5,7 +5,6 @@
         "vendor/es6-shim.js",
         "vendor/canvas-toBlob.js",
         "vendor/jszip.js",
-        "vendor/jszip-utils.js",
         "vendor/js-yaml.js",
         "lib/listings.js",
         "lib/dirEntries.js",
