@@ -42,7 +42,13 @@ function connectionListener(port) {
 
   function pullArchive(source) {
     return fetch(source.url).then(function(response){
-      return response.arrayBuffer();
+      // JSZip requires ArrayBuffer
+      if (source.type == "zip") {
+        return response.arrayBuffer();
+      // Everything else (blob) wants blob
+      } else {
+        return response.blob();
+      }
     }).then(function(data) {
       ++finishedSources;
       postDownloadProgress();
