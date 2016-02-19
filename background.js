@@ -3,7 +3,10 @@
 
 // Tell Chrome to open the app when the app launches
 chrome.app.runtime.onLaunched.addListener(function() {
-  chrome.app.window.create('index.html',{frame:{color:'#dd5500'}});
+  chrome.app.window.create('index.html', {
+    id: 'pulltool-main-window',
+    frame: {color: '#dd5500'},
+  });
 });
 
 function singleMessageListener(message, sender, respond) {
