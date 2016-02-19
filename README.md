@@ -29,6 +29,6 @@ patch:
         setHue: 240
     background.js:
     - text:
-      - replace: '#dd5500'
-        with: '#6666ff'
+      - replace: "var themeColor = '#dd5500';"
+        with: "var themeColor = '#6666ff';"
 ```
