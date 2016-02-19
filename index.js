@@ -41,7 +41,7 @@ function createListingEntry(listing) {
   session.setTabSize(2);
   session.setUseSoftTabs(true);
   editor.renderer.setOption('showLineNumbers', false);
-  editor.setValue(listing.config || '');
+  editor.setValue(listing.config || '', 1);
 
   function saveConfig() {
     var configJson = editor.getValue();
