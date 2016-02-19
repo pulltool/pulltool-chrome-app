@@ -91,8 +91,8 @@ function createListingEntry(listing) {
 }
 
 var lastListingItem = document.getElementById('pseudo-listing');
-
-document.getElementById('new-listing').addEventListener('click', function() {
+var newListingButton = document.getElementById('new-listing');
+newListingButton.addEventListener('click', function() {
   var newListing = createListingObject();
   listings.addNew(newListing);
     listingsDiv.insertBefore(
@@ -100,8 +100,10 @@ document.getElementById('new-listing').addEventListener('click', function() {
 });
 
 var listingsDiv = document.getElementById('pull-listings');
-
-listings.getAll().then(function(listingList){
+var loadingMessage = document.getElementById('loading-message');
+listings.getAll().then(function(listingList) {
+  loadingMessage.remove();
+  newListingButton.hidden = false;
   for (var i = 0; i < listingList.length; i++) {
     listingsDiv.insertBefore(
       createListingEntry(listingList[i]), lastListingItem);
