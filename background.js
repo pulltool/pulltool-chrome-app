@@ -1,11 +1,13 @@
 /* global chrome listings dirEntries clobber patching ExtractionMap
   jsyaml fetch */
 
+var themeColor = '#dd5500';
+
 // Tell Chrome to open the app when the app launches
 chrome.app.runtime.onLaunched.addListener(function() {
   chrome.app.window.create('index.html', {
     id: 'pulltool-main-window',
-    frame: {color: '#dd5500'},
+    frame: {color: themeColor}
   });
 });
 
