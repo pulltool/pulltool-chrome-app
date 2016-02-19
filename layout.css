@@ -2,6 +2,9 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+
+  /* https://github.com/pulltool/pulltool-chrome-app/issues/19 */
+  overflow: auto;
 }
 
 body {
