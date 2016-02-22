@@ -34,6 +34,10 @@ function createListingObject() {
 }
 
 function createListingEntry(listing) {
+  if (!listing.config) {
+    listing.config = '';
+  }
+
   var listingEntry = cre(teListingEntry);
 
   var noDirOps = listingEntry.getPart('no-dir');
@@ -131,7 +135,7 @@ function createListingEntry(listing) {
   session.setTabSize(2);
   session.setUseSoftTabs(true);
   editor.renderer.setOption('showLineNumbers', false);
-  editor.setValue(listing.config || '', 1);
+  editor.setValue(listing.config, 1);
 
   // update the visible operations every time the config is modified
   session.on('change', showApplicableOps);
@@ -154,7 +158,7 @@ function createListingEntry(listing) {
   function revertConfig() {
     // TODO: retrieve value to revert to directly from store
     // TODO: don't modify cursor position?
-    editor.setValue(listing.config || '', 1);
+    editor.setValue(listing.config, 1);
     return showApplicableOps();
   }
 
