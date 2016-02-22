@@ -41,6 +41,7 @@ body {
 textarea, .ace_editor {
   width: 100%;
   flex: 1;
+  text-align: left;
 }
 
 .tightline {
