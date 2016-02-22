@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-flow: column;
   justify-content: space-around;
-  align-items: center;
+  align-items: stretch;
 }
 
 textarea, .ace_editor {
