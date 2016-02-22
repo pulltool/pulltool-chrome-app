@@ -52,7 +52,7 @@ function createListingEntry(listing) {
   var pullInProgress = false;
 
   function showApplicableOps() {
-    if (editor.getValue == listing.config) {
+    if (editor.getValue() == listing.config) {
       if (pullInProgress) {
         return showOps(ongoingOps);
       } else {
