@@ -24,7 +24,8 @@ var teListingEntry = cre('.listing', {wall: true}, [
     cre('.section', {part: 'pull-ongoing', hidden: true}, [
       cre('output', {part: 'pull-status'})
       // TODO: cancel button
-    ])
+    ]),
+    cre('button', {part: 'delete-button', type: 'button'}, 'Delete')
   ])
 ]);
 
@@ -35,23 +36,34 @@ function createListingObject() {
 function createListingEntry(listing) {
   var listingEntry = cre(teListingEntry);
 
-  var opSection = listingEntry.getPart('op-section');
-  function showOps(element) {
-    for (var i = 0; i < opSection.children.length; i++) {
-      var mode = opSection.children[i];
-      mode.hidden = mode != element;
-    }
-  }
   var noDirOps = listingEntry.getPart('no-dir');
   var modifiedConfigOps = listingEntry.getPart('modified-config');
   var pullReadyOps = listingEntry.getPart('pull-ready');
   var ongoingOps = listingEntry.getPart('pull-ongoing');
+  var modes = [noDirOps, modifiedConfigOps, pullReadyOps, ongoingOps];
+
+  function showOps(element) {
+    for (var i = 0; i < modes.length; i++) {
+      var mode = modes[i];
+      mode.hidden = mode != element;
+    }
+  }
+
+  var deleteButton = listingEntry.getPart('delete-button');
+  function deleteThisListing() {
+    return listings.remove(listing.id).then(function(){
+      listingEntry.remove();
+    });
+  }
+  deleteButton.addEventListener('click', deleteThisListing);
 
   // TODO: determine if operation is in progress externally,
   // everywhere this is currently used
   var pullInProgress = false;
 
   function showApplicableOps() {
+    var configInEditor = editor.getValue();
+    deleteButton.hidden = configInEditor != '';
     if (editor.getValue() == listing.config) {
       if (listing.retainedDirId) {
         if (pullInProgress) {
