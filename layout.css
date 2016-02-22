@@ -41,7 +41,7 @@ body {
 textarea, .ace_editor {
   width: 100%;
   flex: 1;
-  text-align: left;
+  text-align: left; /* https://github.com/ajaxorg/ace/pull/2906 */
 }
 
 .tightline {
