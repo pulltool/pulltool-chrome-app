@@ -53,13 +53,17 @@ function createListingEntry(listing) {
 
   function showApplicableOps() {
     if (editor.getValue() == listing.config) {
-      if (pullInProgress) {
-        return showOps(ongoingOps);
+      if (listing.retainedDirId) {
+        if (pullInProgress) {
+          return showOps(ongoingOps);
+        } else {
+          return showOps(pullReadyOps);
+        }
       } else {
-        return showOps(pullReadyOps);
+        return showOps(noDirOps);
       }
     } else {
-      showOps(modifiedConfigOps);
+      return showOps(modifiedConfigOps);
     }
   }
 
@@ -74,8 +78,11 @@ function createListingEntry(listing) {
       if (path) {
         displayPath(path);
         return showApplicableOps();
+
+      // If the path is null (non restorable)
       } else {
-        // TODO: revoke when the path is null (not restorable)
+        // TODO: have something responsible for removing this from the listing
+        delete listing.retainedDirId;
         return showOps(noDirOps);
       }
     });
@@ -91,6 +98,7 @@ function createListingEntry(listing) {
   function selectDir () {
     dirEntries.chooseDir().then(function(dir){
       dirEntries.getEntryDisplayPath(dir.entry).then(displayPath);
+      listing.retainedDirId = dir.retainedId;
       return listings.updateById(
         listing.id, 'retainedDirId', dir.retainedId)
         .then(showApplicableOps);
