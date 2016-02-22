@@ -37,3 +37,9 @@ textarea, .ace_editor {
   width: 100%;
   flex: 1;
 }
+
+.tightline {
+  flex: none;
+  display: flex;
+  flex-flow: row;
+}
