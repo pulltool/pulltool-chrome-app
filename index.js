@@ -155,6 +155,8 @@ function createListingEntry(listing) {
       if (message.type == 'status') {
         statusOutput.textContent = message.message;
       } else if (message.type == 'finish') {
+        // Clear status for next time
+        statusOutput.textContent = '';
         pullInProgress = false;
         showApplicableOps();
       } else if (message.type == 'error') {
