@@ -90,7 +90,7 @@ function createListingEntry(listing) {
 
   function selectDir () {
     dirEntries.chooseDir().then(function(dir){
-      dirEntries.getEntryDisplayPath(dir).then(displayPath);
+      dirEntries.getEntryDisplayPath(dir.entry).then(displayPath);
       return listings.updateById(
         listing.id, 'retainedDirId', dir.retainedId)
         .then(showApplicableOps);
